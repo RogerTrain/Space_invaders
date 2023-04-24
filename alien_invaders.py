@@ -1,6 +1,6 @@
 import sys
 import pygame
-from gaming_setting import Settings
+from settings import Settings
 from ship import Ship
 
 class AlienInvasion:
@@ -33,18 +33,38 @@ class AlienInvasion:
             if event.type == pygame.QUIT:
                 sys.exit()  
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RIGHT:
-                    self.ship.moving_right = True
+                self._check_keydown_events(event)
             elif event.type == pygame.KEYUP:
-                    self.ship.moving_right = False
-                # Move ship to the right 
+                self._check_keyup_events(event)
                 
+    def _check_keydown_events(self, event):
+        """Respond to keypresses."""
+        if event.key == pygame.K_RIGHT:
+            self.ship.moving_right = True
+        elif event.key == pygame.K_LEFT:
+            self.ship.moving_left = True
+        elif event.key == pygame.K_UP:
+            self.ship.moving_up = True
+        elif event.key == pygame.K_DOWN:
+            self.ship.moving_down = True
+        elif event.key == pygame.K_q:
+            sys.exit()    
+    def _check_keyup_events(self, event):
+        """Respond to keyrelease"""
+        if event.key == pygame.K_RIGHT:
+            self.ship.moving_right = False
+        elif event.key == pygame.K_LEFT:
+            self.ship.moving_left = False
+        elif event.key ==pygame.K_UP:
+            self.ship.moving_up = False
+        elif event.key == pygame.K_DOWN:
+            self.ship.moving_down = False
 
 if __name__ == '__main__':
     # Make a game instance, and run the game
     ai = AlienInvasion()
     ai.run_game()
-    
+
 
 
               
